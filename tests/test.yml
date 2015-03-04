@@ -1,0 +1,6 @@
+- name: all
+  hosts: all
+  gather_facts: false
+  sudo: true
+  roles:
+    - elk

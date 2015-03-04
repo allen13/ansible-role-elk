@@ -1,0 +1,26 @@
+[Unit]
+Description={{description}}
+After=docker.service
+Requires=docker.service
+
+[Service]
+EnvironmentFile=/etc/environment
+TimeoutStartSec=1s
+Restart=always
+RestartSec=5s
+
+ExecStartPre=-/usr/bin/docker kill {{docker_instance_name}}
+ExecStartPre=-/usr/bin/docker rm {{docker_instance_name}}
+ExecStartPre=-/usr/bin/docker pull {{docker_image}}
+
+ExecStart=/usr/bin/docker run --rm \
+    --name {{docker_instance_name}} \
+  {% for config in configs%}
+  {{config}} \
+  {% endfor %}
+  {{docker_image}}
+
+ExecStop=/usr/bin/docker stop {{docker_instance_name}}
+
+[Install]
+WantedBy=multi-user.target

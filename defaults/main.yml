@@ -1,0 +1,7 @@
+description: Elasticsearch/Logstash/Graphana
+docker_image: willdurand/elk
+docker_instance_name: elk
+configs:
+  - -p 8080:80
+  - -v /etc/logstash:/etc/logstash
+  - -v /var/log:/var/log/test

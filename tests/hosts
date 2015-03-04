@@ -1,0 +1,2 @@
+[nodes]
+node-01 ansible_ssh_host=192.168.1.101 private_ip=192.168.1.101 ansible_ssh_user=vagrant ansible_ssh_pass=vagrant

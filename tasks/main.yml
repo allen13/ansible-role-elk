@@ -1,0 +1,19 @@
+- name: install docker
+  yum: name=docker state=latest
+
+- name: start docker
+  service: name=docker state=started enabled=yes
+
+- name: install ELK service file
+  template: src=elk.service dest=/usr/lib/systemd/system/elk.service
+  register: service
+
+- name: reload service files
+  shell: systemctl daemon-reload
+  when: service.changed
+
+- name: install logstash configuration
+  template: src=logstash.conf dest=/etc/logstash/logstash.conf
+
+- name: start ELK
+  service: name=elk enabled=yes state=started
